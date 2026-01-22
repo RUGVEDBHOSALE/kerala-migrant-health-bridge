@@ -8,6 +8,7 @@ import DiseaseTrends from '../components/government/DiseaseTrends'
 import MedicineDemand from '../components/government/MedicineDemand'
 import HeatmapView from '../components/maps/HeatmapView'
 import PredictiveTab from '../components/maps/PredictiveTab'
+import HealthCampModal from '../components/government/HealthCampModal'
 import api from '../services/api'
 
 export default function GovernmentDashboard() {
@@ -18,6 +19,7 @@ export default function GovernmentDashboard() {
     const [trends, setTrends] = useState([])
     const [loading, setLoading] = useState(true)
     const [liveUpdates, setLiveUpdates] = useState([])
+    const [showCampModal, setShowCampModal] = useState(false)
 
     useEffect(() => {
         fetchAllData()
@@ -145,11 +147,11 @@ export default function GovernmentDashboard() {
                     <span className="text-white font-medium">Medicine</span>
                 </button>
                 <button
-                    onClick={() => fetchAllData()}
-                    className="stat-card flex flex-col items-center gap-2 hover:bg-white/20"
+                    onClick={() => setShowCampModal(true)}
+                    className="stat-card flex flex-col items-center gap-2 hover:bg-white/20 border-2 border-dashed border-cyan-400/50"
                 >
-                    <span className="text-3xl">🔄</span>
-                    <span className="text-white font-medium">Refresh</span>
+                    <span className="text-3xl">🏕️</span>
+                    <span className="text-white font-medium">Setup Camp</span>
                 </button>
             </div>
         </div>
@@ -167,6 +169,13 @@ export default function GovernmentDashboard() {
                     <Route path="/medicine" element={<MedicineDemand />} />
                 </Routes>
             </div>
+
+            {/* Health Camp Modal */}
+            <HealthCampModal
+                isOpen={showCampModal}
+                onClose={() => setShowCampModal(false)}
+                onSuccess={fetchAllData}
+            />
         </div>
     )
 }

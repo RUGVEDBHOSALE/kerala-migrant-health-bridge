@@ -68,6 +68,49 @@ const initDB = async () => {
         status VARCHAR(20) DEFAULT 'pending',
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
+
+      -- Add OTP columns to workers table for authentication
+      ALTER TABLE workers ADD COLUMN IF NOT EXISTS otp VARCHAR(6);
+      ALTER TABLE workers ADD COLUMN IF NOT EXISTS otp_expires_at TIMESTAMP;
+
+      -- Emergency requests table for worker assistance
+      CREATE TABLE IF NOT EXISTS emergency_requests (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        worker_id UUID REFERENCES workers(id),
+        type VARCHAR(50) NOT NULL,
+        description TEXT,
+        latitude DECIMAL(10, 8),
+        longitude DECIMAL(11, 8),
+        status VARCHAR(20) DEFAULT 'pending',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+
+      -- Health Camps table for scheduled health events
+      CREATE TABLE IF NOT EXISTS health_camps (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        camp_name VARCHAR(255) NOT NULL,
+        camp_type VARCHAR(50) NOT NULL,
+        location_name VARCHAR(255) NOT NULL,
+        latitude DECIMAL(10, 8),
+        longitude DECIMAL(11, 8),
+        maps_link VARCHAR(500),
+        scheduled_date TIMESTAMP NOT NULL,
+        description TEXT,
+        created_by UUID REFERENCES users(id),
+        status VARCHAR(20) DEFAULT 'scheduled',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
+
+      -- Broadcast Notifications table for mobile app
+      CREATE TABLE IF NOT EXISTS notifications (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        title VARCHAR(255) NOT NULL,
+        message TEXT NOT NULL,
+        type VARCHAR(50) NOT NULL,
+        reference_id UUID,
+        is_broadcast BOOLEAN DEFAULT true,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+      );
     `);
     console.log('✅ Database tables initialized');
   } catch (error) {

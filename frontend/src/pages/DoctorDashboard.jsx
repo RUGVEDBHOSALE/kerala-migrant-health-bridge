@@ -44,11 +44,11 @@ export default function DoctorDashboard() {
     const DashboardHome = () => (
         <div className="space-y-6 animate-fade-in">
             {/* Welcome Section */}
-            <div className="glass-card p-6">
-                <h2 className="text-2xl font-bold text-white mb-2">
+            <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-100">
+                <h2 className="text-2xl font-bold text-slate-800 mb-2">
                     Welcome, {user?.name}! 👨‍⚕️
                 </h2>
-                <p className="text-white/60">
+                <p className="text-slate-500">
                     {user?.hospitalName} • {new Date().toLocaleDateString('en-IN', {
                         weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
                     })}
@@ -57,25 +57,25 @@ export default function DoctorDashboard() {
 
             {/* Quick Stats */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="stat-card">
+                <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-100">
                     <div className="text-3xl mb-2">📋</div>
-                    <div className="text-2xl font-bold text-white">{stats?.todayCases || 0}</div>
-                    <div className="text-white/60 text-sm">Cases Today</div>
+                    <div className="text-2xl font-bold text-slate-800">{stats?.todayCases || 0}</div>
+                    <div className="text-slate-500 text-sm">Cases Today</div>
                 </div>
-                <div className="stat-card">
+                <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-100">
                     <div className="text-3xl mb-2">👷</div>
-                    <div className="text-2xl font-bold text-white">{stats?.activeWorkers || 0}</div>
-                    <div className="text-white/60 text-sm">Active Workers</div>
+                    <div className="text-2xl font-bold text-slate-800">{stats?.activeWorkers || 0}</div>
+                    <div className="text-slate-500 text-sm">Active Workers</div>
                 </div>
-                <div className="stat-card">
+                <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-100">
                     <div className="text-3xl mb-2">🏥</div>
-                    <div className="text-2xl font-bold text-white">{stats?.totalCases || 0}</div>
-                    <div className="text-white/60 text-sm">Total Cases</div>
+                    <div className="text-2xl font-bold text-slate-800">{stats?.totalCases || 0}</div>
+                    <div className="text-slate-500 text-sm">Total Cases</div>
                 </div>
-                <div className="stat-card">
+                <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-100">
                     <div className="text-3xl mb-2">💊</div>
-                    <div className="text-2xl font-bold text-white">{stats?.byDiagnosis?.length || 0}</div>
-                    <div className="text-white/60 text-sm">Disease Types</div>
+                    <div className="text-2xl font-bold text-slate-800">{stats?.byDiagnosis?.length || 0}</div>
+                    <div className="text-slate-500 text-sm">Disease Types</div>
                 </div>
             </div>
 
@@ -84,20 +84,20 @@ export default function DoctorDashboard() {
 
             {/* Top Diagnoses */}
             {stats?.byDiagnosis?.length > 0 && (
-                <div className="glass-card p-6">
-                    <h3 className="text-lg font-semibold text-white mb-4">📊 Top Diagnoses (Last 7 Days)</h3>
+                <div className="bg-white p-6 rounded-2xl shadow-md border border-gray-100">
+                    <h3 className="text-lg font-semibold text-slate-800 mb-4">📊 Top Diagnoses (Last 7 Days)</h3>
                     <div className="space-y-3">
                         {stats.byDiagnosis.slice(0, 5).map((item, index) => (
                             <div key={item.diagnosis} className="flex items-center gap-3">
-                                <span className="text-white/60 font-mono text-sm w-6">{index + 1}.</span>
+                                <span className="text-slate-400 font-mono text-sm w-6">{index + 1}.</span>
                                 <div className="flex-1">
                                     <div className="flex justify-between items-center mb-1">
-                                        <span className="text-white text-sm">{item.diagnosis}</span>
-                                        <span className="text-white/60 text-sm">{item.count} cases</span>
+                                        <span className="text-slate-700 text-sm">{item.diagnosis}</span>
+                                        <span className="text-slate-500 text-sm">{item.count} cases</span>
                                     </div>
-                                    <div className="w-full bg-white/10 rounded-full h-2">
+                                    <div className="w-full bg-gray-100 rounded-full h-2">
                                         <div
-                                            className="bg-gradient-to-r from-green-500 to-teal-500 h-2 rounded-full transition-all"
+                                            className="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full transition-all"
                                             style={{ width: `${(item.count / stats.byDiagnosis[0].count) * 100}%` }}
                                         ></div>
                                     </div>

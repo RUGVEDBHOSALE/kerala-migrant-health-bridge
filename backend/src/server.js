@@ -15,6 +15,10 @@ const workerRoutes = require('./routes/workers');
 const caseRoutes = require('./routes/cases');
 const medicineRoutes = require('./routes/medicine');
 const uploadRoutes = require('./routes/uploads');
+const workerAuthRoutes = require('./routes/workerAuth');
+const workerProfileRoutes = require('./routes/workerProfile');
+const emergencyRoutes = require('./routes/emergency');
+const healthCampsRoutes = require('./routes/healthCamps');
 
 const app = express();
 const server = http.createServer(app);
@@ -27,9 +31,9 @@ const io = new Server(server, {
     }
 });
 
-// Middleware
+// Middleware - CORS configured for development (allows Flutter Web app)
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    origin: true,  // Allow all origins in development
     credentials: true
 }));
 app.use(express.json());
@@ -54,6 +58,12 @@ app.use('/api/workers', workerRoutes);
 app.use('/api/cases', caseRoutes);
 app.use('/api/medicine', medicineRoutes);
 app.use('/api/uploads', uploadRoutes);
+app.use('/api/health-camps', healthCampsRoutes);
+
+// Worker App Routes
+app.use('/api/worker-auth', workerAuthRoutes);
+app.use('/api/worker', workerProfileRoutes);
+app.use('/api/emergency', emergencyRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
